@@ -1,0 +1,51 @@
+from datetime import datetime
+import time
+
+
+# This is the decorator
+def logger(func):
+    def wrapper():
+        print("-"*50)
+        print("> Execution started {}".format(datetime.today().strftime("%Y-%m-%d %H:%M:%S")))
+        func()
+        print("> Execution completed {}".format(datetime.today().strftime("%Y-%m-%d %H:%M:%S")))
+        print("-"*50)
+    return wrapper
+
+#To use the decorator 
+@logger 
+def demo_func():
+    print("Executing task!")
+    time.sleep(3)
+    print("Task completed")
+
+## This is the decorator with arguments passed
+def logger_args(func):
+    def wrapper(*args, **kwargs): 
+        print("-"*50)
+        print("> Execution started {}".format(datetime.today().strftime("%Y-%m-%d %H:%M:%S")))
+        func(*args, **kwargs)
+        print("> Execution completed {}".format(datetime.today().strftime("%Y-%m-%d %H:%M:%S")))
+        print("-"*50)
+    # We are basically returning the sequence ff actions as a whole
+    return wrapper 
+
+# To use decorator with arguments
+@logger_args
+def demo_func_args(sleep_time):
+    print("Executing task")
+    time.sleep(sleep_time)
+    print("Task complete")
+
+
+
+# To execute it with syntax sugar
+#demo_func()
+
+# Without the use of syntax sugar
+#logger(demo_func())
+
+# The number is the argument we are passing (sleep) With syntax sugar
+demo_func_args(3)
+
+
